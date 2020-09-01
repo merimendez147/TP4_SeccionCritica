@@ -1,0 +1,9 @@
+La clase Instrumento es superclase de las clases Guitarra, Piano, Saxofon, Guzla y Ukelele.
+Es decir, las clases Guitarra, Piano, Saxofon, Guzla y Ukelele "son un" Instrumento.
+La clase Musica es superclase.
+El main crea los objetos Guitarra, Piano, Saxofon, Guzla y Ukelele, y los agrega a orquesta
+(orquesta es un array de Instrumentos). Luego ejecuta el metodo afinarTodo(orquesta), el metodo afinarTodo pertenece a la clase Musica.
+La clase Musica afina cada Instrumento, con el metodo afinar(Instrumento), luego cada instrumento ejecta el metodo tocar para imprimir "Instrumento.tocar()".
+ 
+
+ 

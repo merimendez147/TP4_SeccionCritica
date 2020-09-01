@@ -1,5 +1,4 @@
-package practico1;
-import java.util.*;
+package practico1;           
 class Instrumento {
     public void tocar(){
         System.out.println("Instrumento.tocar()");
