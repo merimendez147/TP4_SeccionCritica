@@ -1,54 +1,57 @@
 package BarberoDormilon;
 
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
 
 public class Barberia {
-	static Semaphore semBarbero = new Semaphore(0);
-	static Semaphore semSillon = new Semaphore(1);
-	static Semaphore semSalida = new Semaphore(0);
+	Semaphore semBarbero;
+	Semaphore semSillon;
+	Semaphore semSalida;
+	String miNombre;
 	
-	public static class Barbero extends Thread{
-		public void run(){
-			System.out.println("El Barbero esta descanzando");
-			try {
-				semBarbero.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("El Barbero atiende al Cliente");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			semSalida.release();
-			System.out.println("El Barbero termino de atender al Cliente");
-			} 
+	public Barberia(String nombre){
+		miNombre=nombre;
+		semSillon = new Semaphore(1);
+		semBarbero = new Semaphore(0);
+		semSalida = new Semaphore(0);
+	}
+	
+	
+	public boolean entrar(String n){
+		return (semSillon.tryAcquire());
+	}
+	
+	
+	public void solicitarCorte(String n){
+		semBarbero.release();
+		try{
+			semSalida.acquire();
+		}catch(InterruptedException e){
+			Logger.getLogger(Barberia.class.getName()).log(null);
 		}
-	
-	
-	public static class Cliente extends Thread{
-		public void run(){
-			if (semSillon.tryAcquire()){
-				System.out.println("El sillon esta disponible");
-				semBarbero.release();
-				System.out.println("Cliente solicita atencion del Barbero");
-				try {
-					semSalida.acquire();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				semSillon.release();
-			}
+	}
+	public void esperarCliente(){
+		try{
+			semBarbero.acquire();
+		}catch (InterruptedException e){
+			Logger.getLogger(Barberia.class.getName()).log(null);
+			
 		}
 	}
 	
+	public void terminarAtencion(){
+		semSalida.release();
+	}
+	
+	public void salir(){
+		semSillon.release();
+	}
+	
+	
 	public static void main(String[] args){
-		Barbero barbero = new Barbero();
-		Cliente cliente = new Cliente();
+		Barberia barberia = new Barberia("Barberia");
+		Barbero barbero = new Barbero("Barbero",barberia);
+		Cliente cliente = new Cliente("Cliente",barberia);
 		Thread b= new Thread(barbero);
 		Thread c= new Thread(cliente);
 		b.start();
