@@ -17,4 +17,3 @@ public class Letra implements Runnable {
 		unBloc.escribir(letra, id);}
 	}
 }
-

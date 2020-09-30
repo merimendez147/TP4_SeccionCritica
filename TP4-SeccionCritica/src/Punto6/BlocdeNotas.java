@@ -1,3 +1,4 @@
+  
 package Punto6;
 
 import java.util.concurrent.Semaphore;
@@ -12,25 +13,34 @@ public class BlocdeNotas {
 	turno[2]= new Semaphore(0, true);
 	}
 
-private void asignarTurno (int i){
+	private void asignarTurno (int i){
 		try {
 		turno[i].release();
 		}catch (ArrayIndexOutOfBoundsException ex){
 			turno[0].release();
 	}}
-
+	
+	private void esperarTurno(int i){
+		try {
+			turno[i].acquire();
+			}catch (ArrayIndexOutOfBoundsException ex){
+				turno[0].release();} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
 	public void escribir(char l, int i){
-		if (turno[i].tryAcquire()) {
-			if (contador == i){
+		esperarTurno(i);
+		if (contador == i){
+			System.out.println(l);
+			contador=0;
+			asignarTurno(i+1);
+		}else {
 				System.out.println(l);
-				contador=0;
-				asignarTurno(i+1);
-			}else {
-					System.out.println(l);
-					turno[i].release();
-					contador=contador +1;
-			}}
+				turno[i].release();
+				contador=contador +1;
+		}}
 	}	
-}
 
 
