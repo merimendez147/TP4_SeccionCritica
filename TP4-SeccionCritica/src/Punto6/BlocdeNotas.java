@@ -23,8 +23,7 @@ public class BlocdeNotas {
 	private void esperarTurno(int i){
 		try {
 			turno[i].acquire();
-			}catch (ArrayIndexOutOfBoundsException ex){
-				turno[0].release();} catch (InterruptedException e) {
+			}catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
