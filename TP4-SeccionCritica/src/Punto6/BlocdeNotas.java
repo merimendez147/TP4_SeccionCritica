@@ -5,7 +5,7 @@ import java.util.concurrent.Semaphore;
 
 public class BlocdeNotas {
 	private int contador = 0; //cuenta la cantidad de letras que imprime cada hilo
-	Semaphore [] turno = new Semaphore[3];
+	private Semaphore [] turno = new Semaphore[3];
 	
 	public BlocdeNotas(){
 	turno[0]= new Semaphore(1, true);

@@ -4,7 +4,7 @@ import java.util.concurrent.Semaphore;
 
 public class Testigo {
 
-	Semaphore [] testigo = new Semaphore[4];
+	private Semaphore [] testigo = new Semaphore[4];
 	
 	public Testigo(){
 		testigo[0]= new Semaphore(1, true);
