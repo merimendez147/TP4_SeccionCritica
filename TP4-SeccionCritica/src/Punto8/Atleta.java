@@ -12,9 +12,10 @@ public class Atleta implements Runnable{
 	}
 	
 	private void correr(){
+        int tiempo=(int)(Math.random()*11 + 9);
 		System.out.println("El atleta "+ nombre +" esta corriendo");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(1000*tiempo);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,7 +26,5 @@ public class Atleta implements Runnable{
 		miTestigo.esperarTestigo(posicion);
 		this.correr();
 		miTestigo.pasarTestigo(posicion +1);
-		
-		
 	}
 }
