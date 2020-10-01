@@ -12,7 +12,7 @@ public class Atleta implements Runnable{
 	}
 	
 	private void correr(){
-        int tiempo=(int)(Math.random()*11 + 9);
+		int tiempo=(int)(Math.random()*3)+9;
 		System.out.println("El atleta "+ nombre +" esta corriendo");
 		try {
 			Thread.sleep(1000*tiempo);
