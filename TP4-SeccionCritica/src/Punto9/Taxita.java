@@ -1,15 +1,15 @@
 package Punto9;
 
-public class Taxita implements Runnable{
+public class Taxita implements Runnable {
 	String nombre;
 	Taxi miTaxi;
-	
-	public Taxita(String n, Taxi t){
-		this.nombre=n;
-		this.miTaxi=t;
+
+	public Taxita(String n, Taxi t) {
+		this.nombre = n;
+		this.miTaxi = t;
 	}
 
-	private void irDestino(){
+	private void irDestino() {
 		System.out.println("Llevando al pasajero a su destino");
 		try {
 			Thread.sleep(1000);
@@ -18,9 +18,9 @@ public class Taxita implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
-	public void run(){
-		while(true){
+
+	public void run() {
+		while (true) {
 			miTaxi.esperarPasajero();
 			System.out.println("Un pasajero solicita ir a un destino");
 			this.irDestino();

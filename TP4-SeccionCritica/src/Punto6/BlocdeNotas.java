@@ -7,6 +7,8 @@ public class BlocdeNotas {
 	private int contador = 0; // cuenta la cantidad de letras que imprime cada
 								// hilo
 	private Semaphore[] turno = new Semaphore[3];
+	private Semaphore mutexContador = new Semaphore(1); // protege la variable
+														// contador
 
 	public BlocdeNotas() {
 		turno[0] = new Semaphore(1, true);
@@ -31,16 +33,43 @@ public class BlocdeNotas {
 		}
 	}
 
+	private void inicializaContador() {
+		try {
+			mutexContador.acquire();
+			contador = 0;
+			mutexContador.release();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void incrementaContador() {
+		try {
+			mutexContador.acquire();
+			contador++;
+			mutexContador.release();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private boolean imprimeUltimaVez(int i) {
+		return contador == i;
+	}
+
 	public void escribir(char l, int i) {
 		esperarTurno(i);
-		if (contador == i) {
+		if (imprimeUltimaVez(i)) {
 			System.out.println(l);
-			contador = 0;
+			inicializaContador();
 			asignarTurno(i + 1);
 		} else {
 			System.out.println(l);
 			turno[i].release();
-			contador = contador + 1;
+			incrementaContador();
+
 		}
 	}
 }
